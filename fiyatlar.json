@@ -1,0 +1,24 @@
+{
+  "menu": [
+    {
+      "id": 1,
+      "name": "Tavuklu Makarna",
+      "desc": "Tavuk, makarna, parmesan, fesleğen",
+      "category": "yemek",
+      "icon": "🍝",
+      "badge": "POPÜLER",
+      "badgeType": "popular",
+      "price": 85
+    },
+    {
+      "id": 2,
+      "name": "Izgara Tavuk",
+      "desc": "Tavuk göğsü, mevsim salata, patates",
+      "category": "yemek",
+      "icon": "🍗",
+      "badge": "PROTEİN",
+      "badgeType": "popular",
+      "price": 95
+    }
+  ]
+}
