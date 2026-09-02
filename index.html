@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-    <title>Dijital Menü - Adetli Sipariş</title>
+    <title>MERKEZ KANTİN - Dijital Menü</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -17,23 +17,118 @@
             background: #0a0a0a;
             min-height: 100vh;
             color: #ffffff;
-            padding: 12px 12px 100px;
+            padding: 12px;
             display: flex;
             justify-content: center;
             align-items: flex-start;
         }
         .menu-container { max-width: 480px; width: 100%; margin: 0 auto; }
+        
+        /* ===== İSİM MODAL ===== */
+        .name-overlay {
+            display: flex;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.92);
+            backdrop-filter: blur(15px);
+            z-index: 9999;
+            justify-content: center;
+            align-items: center;
+            animation: fadeIn 0.5s ease;
+        }
+        .name-overlay.hidden { display: none; }
+        @keyframes fadeIn {
+            0% { opacity: 0; transform: scale(0.9); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+        .name-modal {
+            background: #1a1a1a;
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 28px;
+            padding: 48px 36px;
+            max-width: 400px;
+            width: 92%;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.8);
+        }
+        .name-modal .name-icon { font-size: 4rem; margin-bottom: 16px; display: block; }
+        .name-modal h2 {
+            font-size: 1.6rem;
+            font-weight: 900;
+            margin-bottom: 8px;
+            background: linear-gradient(135deg, #ff6b35, #e53935);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .name-modal p {
+            font-size: 0.9rem;
+            color: #aaa;
+            margin-bottom: 24px;
+            line-height: 1.6;
+        }
+        .name-modal input {
+            width: 100%;
+            padding: 16px 18px;
+            border-radius: 14px;
+            border: 2px solid rgba(255,255,255,0.08);
+            background: rgba(255,255,255,0.04);
+            color: #fff;
+            font-size: 1rem;
+            font-family: 'Inter', sans-serif;
+            margin-bottom: 12px;
+            outline: none;
+            transition: 0.3s;
+        }
+        .name-modal input:focus { border-color: #ff6b35; background: rgba(255,255,255,0.06); }
+        .name-modal input::placeholder { color: #666; }
+        .name-modal .name-btn {
+            width: 100%;
+            padding: 16px;
+            border-radius: 14px;
+            border: none;
+            background: linear-gradient(135deg, #ff6b35, #e53935);
+            color: #fff;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.3s;
+            font-family: 'Inter', sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        .name-modal .name-btn:hover { transform: scale(1.02); box-shadow: 0 4px 30px rgba(229,57,53,0.4); }
+        .name-modal .name-btn:active { transform: scale(0.97); }
+        .name-modal .name-error {
+            color: #e53935;
+            font-size: 0.8rem;
+            margin-top: 8px;
+            display: none;
+            background: rgba(229,57,53,0.1);
+            padding: 8px 12px;
+            border-radius: 8px;
+        }
+        .name-modal .name-error.show { display: block; }
+        
+        .menu-content { display: none; }
+        .menu-content.show { display: block; }
+        
+        /* ===== BAŞLIK ===== */
         .restaurant-header {
             text-align: center;
             padding: 16px 0 12px;
-            border-bottom: 2px solid rgba(255, 255, 255, 0.05);
+            border-bottom: 2px solid rgba(255,255,255,0.05);
             margin-bottom: 16px;
         }
-        .restaurant-header .logo { font-size: 2.8rem; margin-bottom: 4px; display: block; }
+        .restaurant-header .logo { font-size: 2.8rem; display: block; }
         .restaurant-header h1 {
             font-size: 1.8rem;
             font-weight: 900;
-            letter-spacing: -0.5px;
             background: linear-gradient(135deg, #ff6b35, #e53935);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -43,9 +138,20 @@
             font-size: 0.75rem;
             color: #999;
             margin-top: 4px;
-            letter-spacing: 0.5px;
         }
-        .restaurant-header .info i { color: #ff6b35; margin: 0 4px; }
+        .restaurant-header .info i { color: #ff6b35; }
+        .restaurant-header .user-name {
+            font-size: 0.7rem;
+            color: #ff6b35;
+            margin-top: 6px;
+            background: rgba(255,255,255,0.03);
+            padding: 4px 12px;
+            border-radius: 30px;
+            display: inline-block;
+        }
+        .restaurant-header .user-name i { margin-right: 4px; }
+        
+        /* ===== DİĞER STİLLER ===== */
         .badges {
             display: flex;
             justify-content: center;
@@ -54,59 +160,26 @@
             margin: 10px 0 16px;
         }
         .badges span {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.06);
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.06);
             padding: 4px 14px;
             border-radius: 30px;
             font-size: 0.65rem;
             color: #aaa;
-            letter-spacing: 0.3px;
-            display: flex;
-            align-items: center;
-            gap: 5px;
         }
-        .badges span i { color: #ff6b35; font-size: 0.7rem; }
-        .cart-top-btn { display: flex; justify-content: flex-end; margin-bottom: 10px; }
-        .cart-top-btn button {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            color: #fff;
-            padding: 8px 16px;
-            border-radius: 50px;
-            font-size: 0.8rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: 0.2s;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-family: 'Inter', sans-serif;
-        }
-        .cart-top-btn button:hover { background: rgba(255, 255, 255, 0.1); }
-        .cart-top-btn button .cart-count {
-            background: #e53935;
-            border-radius: 50%;
-            width: 20px;
-            height: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.6rem;
-            font-weight: 700;
-        }
+        .badges span i { color: #ff6b35; margin-right: 4px; }
         .category-tabs {
             display: flex;
             gap: 8px;
             overflow-x: auto;
             padding: 4px 0 16px;
             scrollbar-width: none;
-            -webkit-overflow-scrolling: touch;
         }
         .category-tabs::-webkit-scrollbar { display: none; }
         .category-btn {
             flex: 0 0 auto;
-            background: rgba(255, 255, 255, 0.04);
-            border: 1px solid rgba(255, 255, 255, 0.06);
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.06);
             padding: 8px 18px;
             border-radius: 50px;
             font-family: 'Inter', sans-serif;
@@ -119,12 +192,12 @@
             letter-spacing: 0.5px;
             white-space: nowrap;
         }
-        .category-btn i { margin-right: 5px; font-size: 0.7rem; }
+        .category-btn i { margin-right: 5px; }
         .category-btn.active {
             background: linear-gradient(135deg, #ff6b35, #e53935);
             border-color: #e53935;
             color: #fff;
-            box-shadow: 0 4px 20px rgba(229, 57, 53, 0.3);
+            box-shadow: 0 4px 20px rgba(229,57,53,0.3);
         }
         .menu-grid {
             display: flex;
@@ -133,18 +206,16 @@
             margin-top: 4px;
         }
         .menu-item {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.05);
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.05);
             border-radius: 16px;
             padding: 14px;
             display: flex;
             align-items: center;
             gap: 14px;
-            transition: all 0.2s ease;
             animation: fadeUp 0.3s ease forwards;
             opacity: 0;
             position: relative;
-            overflow: hidden;
         }
         .menu-item::after {
             content: '';
@@ -156,7 +227,6 @@
             background: linear-gradient(180deg, #ff6b35, #e53935);
             border-radius: 0 3px 3px 0;
         }
-        .menu-item:active { transform: scale(0.98); background: rgba(255, 255, 255, 0.06); }
         @keyframes fadeUp {
             0% { opacity: 0; transform: translateY(12px); }
             100% { opacity: 1; transform: translateY(0); }
@@ -165,13 +235,13 @@
             width: 60px;
             height: 60px;
             flex-shrink: 0;
-            background: rgba(255, 255, 255, 0.04);
+            background: rgba(255,255,255,0.04);
             border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 2rem;
-            border: 1px solid rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255,255,255,0.04);
         }
         .item-details { flex: 1; min-width: 0; }
         .item-details .item-name {
@@ -194,15 +264,14 @@
         .badge.popular { background: #ff6b35; color: #0a0a0a; }
         .badge.new { background: #00c853; color: #0a0a0a; }
         .badge.spicy { background: #d32f2f; color: #fff; }
+        .badge.cold { background: #2196F3; color: #fff; }
+        .badge.hot { background: #FF5722; color: #fff; }
+        .badge.dessert { background: #9C27B0; color: #fff; }
         .item-details .item-desc {
             font-size: 0.7rem;
             color: #888;
             margin-top: 2px;
             line-height: 1.3;
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
         }
         .item-bottom {
             display: flex;
@@ -216,18 +285,48 @@
             color: #ff6b35;
         }
         .item-price .currency { font-size: 0.7rem; color: #999; margin-right: 1px; }
-        
-        /* ===== ADET KONTROLLERİ ===== */
+        .cart-top-btn {
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 10px;
+        }
+        .cart-top-btn button {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.08);
+            color: #fff;
+            padding: 8px 16px;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-family: 'Inter', sans-serif;
+        }
+        .cart-top-btn button:hover { background: rgba(255,255,255,0.1); }
+        .cart-top-btn button .cart-count {
+            background: #e53935;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.6rem;
+            font-weight: 700;
+        }
         .quantity-controls {
             display: flex;
             align-items: center;
             gap: 8px;
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(255,255,255,0.05);
             border-radius: 50px;
             padding: 2px;
         }
         .quantity-controls button {
-            background: rgba(255, 255, 255, 0.08);
+            background: rgba(255,255,255,0.08);
             border: none;
             color: #fff;
             width: 28px;
@@ -235,20 +334,17 @@
             border-radius: 50%;
             font-size: 0.9rem;
             cursor: pointer;
-            transition: all 0.2s ease;
+            transition: 0.2s;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-weight: 700;
         }
-        .quantity-controls button:hover { background: rgba(255, 255, 255, 0.15); }
-        .quantity-controls button:active { transform: scale(0.9); }
+        .quantity-controls button:hover { background: rgba(255,255,255,0.15); }
         .quantity-controls .qty-number {
             min-width: 20px;
             text-align: center;
             font-weight: 700;
             font-size: 0.9rem;
-            color: #fff;
         }
         .add-btn {
             background: linear-gradient(135deg, #ff6b35, #e53935);
@@ -259,18 +355,14 @@
             border-radius: 50%;
             font-size: 0.9rem;
             cursor: pointer;
-            transition: all 0.2s ease;
+            transition: 0.2s;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 4px 15px rgba(229, 57, 53, 0.25);
+            box-shadow: 0 4px 15px rgba(229,57,53,0.25);
         }
         .add-btn:active { transform: scale(0.85); }
-        .add-btn.in-cart {
-            background: #00c853;
-            box-shadow: 0 4px 15px rgba(0, 200, 83, 0.25);
-        }
-        
+        .add-btn.in-cart { background: #00c853; box-shadow: 0 4px 15px rgba(0,200,83,0.25); }
         .cart-overlay {
             display: none;
             position: fixed;
@@ -278,7 +370,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.7);
+            background: rgba(0,0,0,0.7);
             backdrop-filter: blur(5px);
             z-index: 999;
             justify-content: center;
@@ -306,12 +398,12 @@
             align-items: center;
             margin-bottom: 16px;
             padding-bottom: 12px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            border-bottom: 1px solid rgba(255,255,255,0.05);
         }
         .cart-panel .cart-header h2 { font-size: 1.2rem; font-weight: 700; }
         .cart-panel .cart-header h2 i { color: #ff6b35; margin-right: 8px; }
         .cart-panel .cart-header .close-btn {
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(255,255,255,0.05);
             border: none;
             color: #fff;
             width: 32px;
@@ -321,7 +413,7 @@
             cursor: pointer;
             transition: 0.2s;
         }
-        .cart-panel .cart-header .close-btn:hover { background: rgba(255, 255, 255, 0.1); }
+        .cart-panel .cart-header .close-btn:hover { background: rgba(255,255,255,0.1); }
         .cart-items {
             flex: 1;
             overflow-y: auto;
@@ -330,13 +422,13 @@
         }
         .cart-items::-webkit-scrollbar { width: 3px; }
         .cart-items::-webkit-scrollbar-thumb { background: #e53935; border-radius: 10px; }
-        .cart-items::-webkit-scrollbar-track { background: rgba(255, 255, 255, 0.03); }
+        .cart-items::-webkit-scrollbar-track { background: rgba(255,255,255,0.03); }
         .cart-item {
             display: flex;
             align-items: center;
             gap: 12px;
             padding: 10px 0;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+            border-bottom: 1px solid rgba(255,255,255,0.04);
             animation: fadeUp 0.2s ease forwards;
             opacity: 0;
         }
@@ -344,8 +436,6 @@
         .cart-item .ci-info { flex: 1; }
         .cart-item .ci-info .ci-name { font-size: 0.85rem; font-weight: 600; }
         .cart-item .ci-info .ci-price { font-size: 0.75rem; color: #ff6b35; font-weight: 700; }
-        
-        /* Sepetteki adet kontrolleri */
         .cart-item .ci-qty-controls {
             display: flex;
             align-items: center;
@@ -353,7 +443,7 @@
             margin-top: 2px;
         }
         .cart-item .ci-qty-controls button {
-            background: rgba(255, 255, 255, 0.06);
+            background: rgba(255,255,255,0.06);
             border: none;
             color: #fff;
             width: 24px;
@@ -366,7 +456,7 @@
             align-items: center;
             justify-content: center;
         }
-        .cart-item .ci-qty-controls button:hover { background: rgba(255, 255, 255, 0.12); }
+        .cart-item .ci-qty-controls button:hover { background: rgba(255,255,255,0.12); }
         .cart-item .ci-qty-controls .ci-qty-num {
             min-width: 18px;
             text-align: center;
@@ -374,7 +464,7 @@
             font-size: 0.8rem;
         }
         .cart-item .ci-remove {
-            background: rgba(229, 57, 53, 0.15);
+            background: rgba(229,57,53,0.15);
             border: none;
             color: #e53935;
             width: 28px;
@@ -384,7 +474,7 @@
             transition: 0.2s;
             font-size: 0.8rem;
         }
-        .cart-item .ci-remove:hover { background: rgba(229, 57, 53, 0.3); }
+        .cart-item .ci-remove:hover { background: rgba(229,57,53,0.3); }
         .cart-empty {
             text-align: center;
             padding: 40px 20px;
@@ -392,7 +482,7 @@
         }
         .cart-empty i { font-size: 3rem; color: #333; display: block; margin-bottom: 12px; }
         .cart-footer {
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            border-top: 1px solid rgba(255,255,255,0.05);
             padding-top: 16px;
         }
         .cart-total {
@@ -414,21 +504,21 @@
             font-size: 1rem;
             font-weight: 700;
             cursor: pointer;
-            transition: all 0.2s ease;
+            transition: 0.2s;
             font-family: 'Inter', sans-serif;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 10px;
         }
-        .order-btn:hover { transform: scale(1.02); box-shadow: 0 4px 25px rgba(229, 57, 53, 0.3); }
+        .order-btn:hover { transform: scale(1.02); box-shadow: 0 4px 25px rgba(229,57,53,0.3); }
         .order-btn:active { transform: scale(0.97); }
         .order-btn:disabled { opacity: 0.3; cursor: not-allowed; transform: none; }
         .qr-section {
             margin-top: 24px;
             padding: 16px;
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.05);
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.05);
             border-radius: 16px;
             display: flex;
             align-items: center;
@@ -443,26 +533,6 @@
             letter-spacing: 0.5px;
         }
         .qr-section .qr-info p { font-size: 0.65rem; color: #666; margin-top: 2px; }
-        .qr-actions {
-            display: flex;
-            gap: 6px;
-            margin-top: 6px;
-        }
-        .qr-actions button {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            color: #aaa;
-            padding: 3px 12px;
-            border-radius: 30px;
-            font-size: 0.55rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: 0.2s;
-            text-transform: uppercase;
-            letter-spacing: 0.3px;
-            font-family: 'Inter', sans-serif;
-        }
-        .qr-actions button:hover { background: rgba(255, 255, 255, 0.1); color: #fff; }
         #qrcode {
             background: #fff;
             padding: 6px;
@@ -478,10 +548,9 @@
         .footer {
             margin-top: 24px;
             padding-top: 16px;
-            border-top: 1px solid rgba(255, 255, 255, 0.04);
+            border-top: 1px solid rgba(255,255,255,0.04);
             display: flex;
             justify-content: space-between;
-            align-items: center;
             flex-wrap: wrap;
             gap: 8px;
             font-size: 0.6rem;
@@ -496,48 +565,71 @@
             left: 50%;
             transform: translateX(-50%);
             background: #1a1a1a;
-            border: 1px solid rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255,255,255,0.05);
             padding: 10px 20px;
             border-radius: 12px;
             font-size: 0.8rem;
             color: #fff;
-            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 4px 30px rgba(0,0,0,0.5);
             opacity: 0;
             transition: all 0.3s ease;
             pointer-events: none;
             z-index: 1000;
         }
         .toast.show { opacity: 1; bottom: 110px; }
+        
         @media (max-width: 420px) {
             .restaurant-header h1 { font-size: 1.5rem; }
             .item-image { width: 50px; height: 50px; font-size: 1.6rem; }
-            .item-details .item-name { font-size: 0.85rem; }
             #qrcode { width: 70px; height: 70px; }
             .qr-section { flex-direction: column; text-align: center; }
             .cart-panel { max-height: 90vh; padding: 16px 12px 24px; }
+            .name-modal { padding: 30px 20px; }
         }
     </style>
 </head>
 <body>
+
+<!-- ===== İSİM MODAL ===== -->
+<div class="name-overlay" id="nameOverlay">
+    <div class="name-modal">
+        <span class="name-icon">👋</span>
+        <h2>Hoş Geldiniz!</h2>
+        <p>Sipariş vermek için adınızı girin</p>
+        <input type="text" id="userNameInput" placeholder="Adınız" autocomplete="name">
+        <div class="name-error" id="nameError">
+            <i class="fas fa-exclamation-circle"></i> Lütfen adınızı girin!
+        </div>
+        <button class="name-btn" onclick="saveName()">
+            <i class="fas fa-check"></i> Devam Et
+        </button>
+    </div>
+</div>
+
+<!-- ===== MENÜ İÇERİĞİ ===== -->
+<div class="menu-content" id="menuContent">
+
     <div class="menu-container">
 
-        <!-- BAŞLIK -->
         <div class="restaurant-header">
-            <span class="logo">🍔</span>
-            <h1>BURGER KING</h1>
+            <span class="logo">🏫</span>
+            <h1>MERKEZ KANTİN</h1>
             <div class="info">
-                <i class="fas fa-clock"></i> 10:00 - 00:00
+                <i class="fas fa-clock"></i> 08:00 - 18:00
                 <i class="fas fa-circle" style="font-size:0.3rem; color:#555;"></i>
-                <i class="fas fa-tag"></i> Tavuk Burger
+                <i class="fas fa-tag"></i> Lezzet Durağı
+            </div>
+            <div class="user-name" id="userNameDisplay">
+                <i class="fas fa-user"></i> <span id="userNameText">İsim girilmedi</span>
             </div>
         </div>
 
-        <!-- BADGES & SEPET -->
         <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-bottom:10px;">
             <div class="badges" style="margin:0;">
-                <span><i class="fas fa-fire"></i> Izgara</span>
-                <span><i class="fas fa-crown"></i> Kraliyet</span>
-                <span><i class="fas fa-pepper-hot"></i> Acılı</span>
+                <span><i class="fas fa-utensils"></i> Yemekler</span>
+                <span><i class="fas fa-mug-hot"></i> Sıcak İçecek</span>
+                <span><i class="fas fa-glass-whiskey"></i> Soğuk İçecek</span>
+                <span><i class="fas fa-cake"></i> Tatlı</span>
             </div>
             <div class="cart-top-btn">
                 <button onclick="openCart()">
@@ -548,413 +640,405 @@
             </div>
         </div>
 
-        <!-- KATEGORİLER -->
         <div class="category-tabs" id="categoryTabs">
             <button class="category-btn active" data-category="all"><i class="fas fa-th-list"></i> Tümü</button>
-            <button class="category-btn" data-category="classic"><i class="fas fa-crown"></i> Classic</button>
-            <button class="category-btn" data-category="spicy"><i class="fas fa-pepper-hot"></i> Spicy</button>
-            <button class="category-btn" data-category="crispy"><i class="fas fa-crunch"></i> Crispy</button>
-            <button class="category-btn" data-category="king"><i class="fas fa-star"></i> King</button>
+            <button class="category-btn" data-category="yemek"><i class="fas fa-utensils"></i> Yemekler</button>
+            <button class="category-btn" data-category="sicak-icecek"><i class="fas fa-mug-hot"></i> Sıcak İçecek</button>
+            <button class="category-btn" data-category="soguk-icecek"><i class="fas fa-glass-whiskey"></i> Soğuk İçecek</button>
+            <button class="category-btn" data-category="tatli"><i class="fas fa-cake"></i> Tatlı</button>
         </div>
 
-        <!-- MENÜ -->
         <div class="menu-grid" id="menuGrid"></div>
 
-        <!-- QR KOD -->
         <div class="qr-section">
             <div class="qr-info">
                 <h4><i class="fas fa-qrcode"></i> QR Menü</h4>
                 <p>Telefonla okut, sipariş ver</p>
-                <div class="qr-actions">
-                    <button onclick="downloadQR()"><i class="fas fa-download"></i> İndir</button>
-                    <button onclick="printQR()"><i class="fas fa-print"></i> Yazdır</button>
-                </div>
             </div>
             <div id="qrcode"></div>
         </div>
 
-        <!-- FOOTER -->
         <div class="footer">
-            <span><i class="fas fa-fire"></i> Ateşte Izgara</span>
+            <span><i class="fas fa-fire"></i> Taze</span>
             <span><i class="fas fa-credit-card"></i> Kart Kabul</span>
             <span><i class="fas fa-wifi"></i> Wi-Fi</span>
         </div>
 
     </div>
 
-    <!-- SEPET PANELİ -->
-    <div class="cart-overlay" id="cartOverlay" onclick="if(event.target===this) closeCart()">
-        <div class="cart-panel">
-            <div class="cart-header">
-                <h2><i class="fas fa-shopping-cart"></i> Sepetim</h2>
-                <button class="close-btn" onclick="closeCart()"><i class="fas fa-times"></i></button>
+</div>
+
+<!-- ===== SEPET PANELİ ===== -->
+<div class="cart-overlay" id="cartOverlay" onclick="if(event.target===this) closeCart()">
+    <div class="cart-panel">
+        <div class="cart-header">
+            <h2><i class="fas fa-shopping-cart"></i> Sepetim</h2>
+            <button class="close-btn" onclick="closeCart()"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="cart-items" id="cartItems"></div>
+        <div class="cart-footer">
+            <div class="cart-total">
+                <span>Toplam</span>
+                <span class="total-amount" id="cartTotal">₺0.00</span>
             </div>
-            <div class="cart-items" id="cartItems"></div>
-            <div class="cart-footer">
-                <div class="cart-total">
-                    <span>Toplam</span>
-                    <span class="total-amount" id="cartTotal">₺0.00</span>
-                </div>
-                <button class="order-btn" id="orderBtn" onclick="placeOrder()" disabled>
-                    <i class="fas fa-check-circle"></i> Sipariş Ver
-                </button>
-            </div>
+            <button class="order-btn" id="orderBtn" onclick="placeOrder()" disabled>
+                <i class="fas fa-check-circle"></i> Sipariş Ver
+            </button>
         </div>
     </div>
+</div>
 
-    <!-- TOAST -->
-    <div class="toast" id="toast"></div>
+<!-- ===== TOAST ===== -->
+<div class="toast" id="toast"></div>
 
-    <script>
-        // =============================================================
-        // 🎯 1. FİYAT LİSTESİ - SADECE BURADAKİ SAYILARI DEĞİŞTİR!
-        // =============================================================
-        const PRICES = {
-            1: 189, 2: 199, 3: 179, 4: 239, 5: 169,
-            6: 195, 7: 149, 8: 259, 9: 149, 10: 219
-        };
+<!-- ============================================================ -->
+<!-- JAVASCRIPT                                                   -->
+<!-- ============================================================ -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 
-        // =============================================================
-        // 📋 2. MENÜ LİSTESİ - ÜRÜN EKLE/ÇIKAR BURADAN!
-        // =============================================================
-        const menuData = [
-            { id: 1, name: "Tavuk burger", desc: "Izgara tavuk, marul, domates, BK sosu, brioche", category: "classic", icon: "🍔", badge: "POPÜLER", badgeType: "popular" },
-            { id: 2, name: "Acılı burger", desc: "Acılı tavuk, jalapeno, pepper jack, ateş sosu", category: "spicy", icon: "🌶️", badge: "ACILI", badgeType: "spicy" },
-            { id: 3, name: "Crispy Deluxe", desc: "Çıtır tavuk, marul, mayonez, cheddar", category: "crispy", icon: "🍗", badge: "ÇITIR", badgeType: "new" },
-            { id: 4, name: "King Chicken XL", desc: "Çift fileto, çift peynir, domates, marul", category: "king", icon: "👑", badge: "XL", badgeType: "popular" },
-            { id: 5, name: "BBQ Chicken", desc: "Izgara tavuk, BBQ sos, soğan halkası", category: "classic", icon: "🥓", badge: "BBQ", badgeType: "new" },
-            { id: 6, name: "Hot & Spicy", desc: "Çıtır acı tavuk, jalapeno sos, turşu", category: "spicy", icon: "🔥", badge: "ACILI", badgeType: "spicy" },
-            { id: 7, name: "Nugget Burger", desc: "5 nugget, ezilmiş peynir, tatlı soğan", category: "crispy", icon: "🧆", badge: "NUGGET", badgeType: "new" },
-            { id: 8, name: "Double King", desc: "İki kat tavuk, iki kat cheddar, King sos", category: "king", icon: "👑", badge: "ÇİFT", badgeType: "popular" },
-            { id: 9, name: "Classic Chicken", desc: "Tavuk fileto, marul, mayonez, ketçap", category: "classic", icon: "🍔", badge: "KLASİK", badgeType: "new" },
-            { id: 10, name: "Mexican Spicy", desc: "Tavuk, salsa, acı biber, guacamole", category: "spicy", icon: "🌮", badge: "MEKSİKA", badgeType: "spicy" }
-        ];
+<script>
+// ================================================================
+// 🔑 GİTHUB JSON URL
+// ================================================================
+const FIYAT_URL = "https://raw.githubusercontent.com/duygu35b-source/guzelmenu/refs/heads/main/fiyatlar.json";
 
-        // Fiyatları menüye ekle
-        menuData.forEach(item => {
-            item.price = PRICES[item.id] || 0;
-        });
+// ================================================================
+// 📋  MENÜ VERİLERİNİ GİTHUB'DAN ÇEK
+// ================================================================
+let menuData = [];
 
-        // =============================================================
-        // 🛒 SEPET (ADET DESTEKLİ!)
-        // =============================================================
-        let cart = [];
-
-        // Ürünü sepete ekle (adet artır)
-        function addToCart(productId) {
-            const product = menuData.find(p => p.id === productId);
-            if (!product) return;
-
-            const existing = cart.find(item => item.id === productId);
-            if (existing) {
-                existing.quantity += 1;
-            } else {
-                cart.push({ ...product, quantity: 1 });
-            }
-
-            updateCartUI();
-            showToast(`✅ "${product.name}" sepete eklendi! (${getCartItemQuantity(productId)} adet)`);
-            updateAddButtons();
-        }
-
-        // Ürünü sepetten çıkar (adet azalt veya tamamen sil)
-        function removeFromCart(productId) {
-            const product = menuData.find(p => p.id === productId);
-            const existing = cart.find(item => item.id === productId);
-            
-            if (!existing) return;
-            
-            if (existing.quantity > 1) {
-                existing.quantity -= 1;
-            } else {
-                cart = cart.filter(item => item.id !== productId);
-            }
-
-            updateCartUI();
-            const qty = getCartItemQuantity(productId);
-            if (qty > 0) {
-                showToast(`⬇️ "${product.name}" adedi azaltıldı (${qty} adet)`);
-            } else {
-                showToast(`🗑️ "${product.name}" sepetten çıkarıldı`);
-            }
-            updateAddButtons();
-        }
-
-        // Ürünü tamamen sepetten sil
-        function deleteFromCart(productId) {
-            const product = menuData.find(p => p.id === productId);
-            cart = cart.filter(item => item.id !== productId);
-            updateCartUI();
-            showToast(`🗑️ "${product.name}" sepetten tamamen silindi`);
-            updateAddButtons();
-        }
-
-        // Sepetteki ürün adedini bul
-        function getCartItemQuantity(productId) {
-            const item = cart.find(i => i.id === productId);
-            return item ? item.quantity : 0;
-        }
-
-        // Sepet UI'ını güncelle
-        function updateCartUI() {
-            const cartItems = document.getElementById('cartItems');
-            const cartTotal = document.getElementById('cartTotal');
-            const cartCountTop = document.getElementById('cartCountTop');
-            const orderBtn = document.getElementById('orderBtn');
-
-            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
-            cartCountTop.textContent = totalItems;
-
-            if (cart.length === 0) {
-                cartItems.innerHTML = `
-                    <div class="cart-empty">
-                        <i class="fas fa-shopping-bag"></i>
-                        <p>Sepetiniz boş</p>
-                        <p style="font-size:0.7rem; color:#444;">Hemen bir şeyler ekleyin!</p>
-                    </div>
-                `;
-                cartTotal.textContent = '₺0.00';
-                orderBtn.disabled = true;
-                return;
-            }
-
-            let html = '';
-            let total = 0;
-            cart.forEach(item => {
-                const itemTotal = item.price * item.quantity;
-                total += itemTotal;
-                html += `
-                    <div class="cart-item">
-                        <div class="ci-icon">${item.icon || '🍽️'}</div>
-                        <div class="ci-info">
-                            <div class="ci-name">${item.name}</div>
-                            <div class="ci-price">₺${itemTotal.toFixed(2)}</div>
-                            <div class="ci-qty-controls">
-                                <button onclick="removeFromCart(${item.id})"><i class="fas fa-minus"></i></button>
-                                <span class="ci-qty-num">${item.quantity}</span>
-                                <button onclick="addToCart(${item.id})"><i class="fas fa-plus"></i></button>
-                            </div>
-                        </div>
-                        <button class="ci-remove" onclick="deleteFromCart(${item.id})">
-                            <i class="fas fa-trash"></i>
-                        </button>
-                    </div>
-                `;
-            });
-
-            cartItems.innerHTML = html;
-            cartTotal.textContent = `₺${total.toFixed(2)}`;
-            orderBtn.disabled = false;
-        }
-
-        // Menüdeki "+" butonlarını güncelle
-        function updateAddButtons() {
-            document.querySelectorAll('.add-btn').forEach(btn => {
-                const id = parseInt(btn.getAttribute('data-id'));
-                const qty = getCartItemQuantity(id);
-                const inCart = qty > 0;
-                
-                btn.classList.toggle('in-cart', inCart);
-                
-                // Butonun içine adet bilgisi ekle
-                if (inCart) {
-                    btn.innerHTML = `<span style="font-size:0.6rem;">${qty}</span>`;
-                } else {
-                    btn.innerHTML = '<i class="fas fa-plus"></i>';
-                }
-            });
-        }
-
-        // =============================================================
-        // MENÜYÜ GÖSTER
-        // =============================================================
-        const categoryBtns = document.querySelectorAll('.category-btn');
-        const menuGrid = document.getElementById('menuGrid');
-
-        function renderMenu(category = 'all') {
-            const filtered = category === 'all' ? menuData : menuData.filter(item => item.category === category);
-
-            if (filtered.length === 0) {
-                menuGrid.innerHTML = `
-                    <div style="text-align:center; padding:40px 20px; background:rgba(255,255,255,0.02); border-radius:16px;">
-                        <i class="fas fa-utensils" style="font-size:2rem; color:#555; display:block; margin-bottom:8px;"></i>
-                        <p style="color:#666; font-size:0.8rem;">Bu kategoride ürün yok</p>
-                    </div>
-                `;
-                return;
-            }
-
-            let html = '';
-            filtered.forEach((item, index) => {
-                const qty = getCartItemQuantity(item.id);
-                html += `
-                    <div class="menu-item" style="animation-delay: ${(index % 8) * 0.03}s;">
-                        <div class="item-image">${item.icon || '🍽️'}</div>
-                        <div class="item-details">
-                            <div class="item-name">
-                                ${item.name}
-                                ${item.badge ? `<span class="badge ${item.badgeType || 'popular'}">${item.badge}</span>` : ''}
-                            </div>
-                            <div class="item-desc">${item.desc}</div>
-                            <div class="item-bottom">
-                                <span class="item-price"><span class="currency">₺</span>${item.price}</span>
-                                <div style="display:flex; align-items:center; gap:8px;">
-                                    ${qty > 0 ? `
-                                        <div class="quantity-controls">
-                                            <button onclick="removeFromCart(${item.id})"><i class="fas fa-minus"></i></button>
-                                            <span class="qty-number">${qty}</span>
-                                            <button onclick="addToCart(${item.id})"><i class="fas fa-plus"></i></button>
-                                        </div>
-                                    ` : `
-                                        <button class="add-btn" data-id="${item.id}" onclick="addToCart(${item.id})">
-                                            <i class="fas fa-plus"></i>
-                                        </button>
-                                    `}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                `;
-            });
-            menuGrid.innerHTML = html;
-        }
-
-        categoryBtns.forEach(btn => {
-            btn.addEventListener('click', function() {
-                categoryBtns.forEach(b => b.classList.remove('active'));
-                this.classList.add('active');
-                renderMenu(this.getAttribute('data-category'));
-            });
-        });
-
-        // =============================================================
-        // SEPET AÇ/KAPA
-        // =============================================================
-        function openCart() {
-            document.getElementById('cartOverlay').classList.add('active');
-            document.body.style.overflow = 'hidden';
-            updateCartUI();
-        }
-
-        function closeCart() {
-            document.getElementById('cartOverlay').classList.remove('active');
-            document.body.style.overflow = '';
-        }
-
-        // =============================================================
-        // SİPARİŞ VER
-        // =============================================================
-        function placeOrder() {
-            if (cart.length === 0) {
-                showToast('⚠️ Sepetiniz boş!');
-                return;
-            }
-
-            const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-            const orderSummary = cart.map(item => 
-                `${item.icon} ${item.name} ×${item.quantity} = ₺${(item.price * item.quantity).toFixed(2)}`
-            ).join('\n');
-
-            const confirmOrder = confirm(
-                `🛒 SİPARİŞ ÖZETİ\n\n${orderSummary}\n\n━━━━━━━━━━━━━━━\n💰 TOPLAM: ₺${total.toFixed(2)}\n\nSiparişi onaylıyor musunuz?`
-            );
-
-            if (confirmOrder) {
-                showToast(`✅ Siparişiniz alındı! Toplam: ₺${total.toFixed(2)}`);
-                cart = [];
-                updateCartUI();
-                closeCart();
-                renderMenu(document.querySelector('.category-btn.active')?.getAttribute('data-category') || 'all');
-            }
-        }
-
-        // =============================================================
-        // TOAST BİLDİRİM
-        // =============================================================
-        let toastTimeout;
-
-        function showToast(message) {
-            const toast = document.getElementById('toast');
-            toast.textContent = message;
-            toast.classList.add('show');
-            clearTimeout(toastTimeout);
-            toastTimeout = setTimeout(() => {
-                toast.classList.remove('show');
-            }, 2500);
-        }
-
-        // =============================================================
-        // QR KOD
-        // =============================================================
-        function generateQR() {
-            const container = document.getElementById('qrcode');
-            container.innerHTML = '';
-            new QRCode(container, {
-                text: window.location.href,
-                width: 160,
-                height: 160,
-                colorDark: '#0a0a0a',
-                colorLight: '#ffffff',
-                correctLevel: QRCode.CorrectLevel.H
-            });
-        }
-
-        window.addEventListener('load', generateQR);
-
-        window.downloadQR = function() {
-            const qrImg = document.querySelector('#qrcode img');
-            if (!qrImg) {
-                showToast('⚠️ QR kod oluşturulamadı!');
-                return;
-            }
-            const canvas = document.createElement('canvas');
-            canvas.width = 400;
-            canvas.height = 400;
-            const ctx = canvas.getContext('2d');
-            ctx.fillStyle = '#ffffff';
-            ctx.fillRect(0, 0, 400, 400);
-            const img = new Image();
-            img.crossOrigin = 'anonymous';
-            img.src = qrImg.src;
-            img.onload = function() {
-                ctx.drawImage(img, 20, 20, 360, 360);
-                const link = document.createElement('a');
-                link.download = 'dijital-menu-qr.png';
-                link.href = canvas.toDataURL('image/png');
-                link.click();
-                showToast('✅ QR kod indirildi!');
-            };
-        };
-
-        window.printQR = function() {
-            const qrHTML = document.querySelector('#qrcode').innerHTML;
-            const win = window.open('', '_blank');
-            win.document.write(`
-                <html>
-                    <head><title>QR Kod</title></head>
-                    <body style="display:flex; justify-content:center; align-items:center; height:100vh; margin:0; background:#f5f5f5; font-family:Arial;">
-                        <div style="text-align:center; background:white; padding:40px; border-radius:20px;">
-                            <h2 style="color:#e53935;">🍔 Dijital Menü</h2>
-                            <div style="margin:20px auto;">${qrHTML}</div>
-                            <p style="color:#666;">QR kod ile menüye erişin</p>
-                        </div>
-                        <script>
-                            window.onload = function() { window.print(); }
-                        <\/script>
-                    </body>
-                </html>
-            `);
-            win.document.close();
-        };
-
-        // =============================================================
-        // 🚀 BAŞLAT
-        // =============================================================
+async function fetchMenu() {
+    try {
+        const response = await fetch(FIYAT_URL);
+        const data = await response.json();
+        menuData = data.menu || [];
         renderMenu('all');
+        return menuData;
+    } catch (error) {
+        console.error('Menü yüklenemedi:', error);
+        showToast('⚠️ Menü yüklenemedi. Lütfen sayfayı yenileyin.');
+        return [];
+    }
+}
 
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') closeCart();
-        });
-    </script>
+// ================================================================
+// 🖥️  MENÜYÜ GÖSTER
+// ================================================================
+function renderMenu(category = 'all') {
+    const filtered = category === 'all' ? menuData : menuData.filter(item => item.category === category);
+    const menuGrid = document.getElementById('menuGrid');
+    
+    if (filtered.length === 0) {
+        menuGrid.innerHTML = `
+            <div style="text-align:center; padding:40px 20px; background:rgba(255,255,255,0.02); border-radius:16px;">
+                <i class="fas fa-utensils" style="font-size:2rem; color:#555; display:block; margin-bottom:8px;"></i>
+                <p style="color:#666; font-size:0.8rem;">Bu kategoride ürün yok</p>
+            </div>
+        `;
+        return;
+    }
+    
+    let html = '';
+    filtered.forEach((item, index) => {
+        const qty = getCartItemQuantity(item.id);
+        html += `
+            <div class="menu-item" style="animation-delay: ${(index % 8) * 0.03}s;">
+                <div class="item-image">${item.icon || '🍽️'}</div>
+                <div class="item-details">
+                    <div class="item-name">
+                        ${item.name}
+                        ${item.badge ? `<span class="badge ${item.badgeType || 'popular'}">${item.badge}</span>` : ''}
+                    </div>
+                    <div class="item-desc">${item.desc}</div>
+                    <div class="item-bottom">
+                        <span class="item-price"><span class="currency">₺</span>${item.price}</span>
+                        <div style="display:flex; align-items:center; gap:8px;">
+                            ${qty > 0 ? `
+                                <div class="quantity-controls">
+                                    <button onclick="removeFromCart(${item.id})"><i class="fas fa-minus"></i></button>
+                                    <span class="qty-number">${qty}</span>
+                                    <button onclick="addToCart(${item.id})"><i class="fas fa-plus"></i></button>
+                                </div>
+                            ` : `
+                                <button class="add-btn" data-id="${item.id}" onclick="addToCart(${item.id})">
+                                    <i class="fas fa-plus"></i>
+                                </button>
+                            `}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+    });
+    menuGrid.innerHTML = html;
+}
+
+// ================================================================
+// 👤  İSİM YÖNETİMİ
+// ================================================================
+let userName = '';
+
+function saveName() {
+    const input = document.getElementById('userNameInput');
+    const error = document.getElementById('nameError');
+    const name = input.value.trim();
+    
+    if (!name) {
+        error.classList.add('show');
+        input.style.borderColor = '#e53935';
+        setTimeout(() => { input.style.borderColor = 'rgba(255,255,255,0.08)'; }, 2000);
+        return;
+    }
+    
+    error.classList.remove('show');
+    userName = name;
+    document.getElementById('userNameText').textContent = name;
+    document.getElementById('userNameDisplay').style.display = 'inline-block';
+    
+    const overlay = document.getElementById('nameOverlay');
+    overlay.style.opacity = '0';
+    overlay.style.transition = 'opacity 0.5s ease';
+    
+    setTimeout(() => {
+        overlay.classList.add('hidden');
+        document.getElementById('menuContent').classList.add('show');
+    }, 500);
+    
+    localStorage.setItem('kullaniciAdi', name);
+    showToast('✅ Hoş geldin, ' + name + '!');
+}
+
+window.addEventListener('load', function() {
+    const savedName = localStorage.getItem('kullaniciAdi');
+    if (savedName) {
+        userName = savedName;
+        document.getElementById('userNameText').textContent = savedName;
+        document.getElementById('userNameDisplay').style.display = 'inline-block';
+        document.getElementById('nameOverlay').classList.add('hidden');
+        document.getElementById('menuContent').classList.add('show');
+    }
+    fetchMenu();
+});
+
+document.getElementById('userNameInput').addEventListener('keypress', function(e) {
+    if (e.key === 'Enter') saveName();
+});
+
+// ================================================================
+// 🛒  SEPET İŞLEMLERİ
+// ================================================================
+let cart = [];
+
+function getCartItemQuantity(productId) {
+    const item = cart.find(i => i.id === productId);
+    return item ? item.quantity : 0;
+}
+
+function addToCart(productId) {
+    const product = menuData.find(p => p.id === productId);
+    if (!product) return;
+    
+    if (!userName) {
+        document.getElementById('nameOverlay').classList.remove('hidden');
+        document.getElementById('nameOverlay').style.opacity = '1';
+        showToast('⚠️ Lütfen önce adınızı girin!');
+        return;
+    }
+    
+    const existing = cart.find(item => item.id === productId);
+    if (existing) {
+        existing.quantity += 1;
+    } else {
+        cart.push({ ...product, quantity: 1 });
+    }
+    
+    updateCartUI();
+    showToast(`✅ "${product.name}" sepete eklendi! (${getCartItemQuantity(productId)} adet)`);
+    renderMenu(document.querySelector('.category-btn.active')?.getAttribute('data-category') || 'all');
+}
+
+function removeFromCart(productId) {
+    const existing = cart.find(item => item.id === productId);
+    if (!existing) return;
+    
+    if (existing.quantity > 1) {
+        existing.quantity -= 1;
+    } else {
+        cart = cart.filter(item => item.id !== productId);
+    }
+    
+    updateCartUI();
+    renderMenu(document.querySelector('.category-btn.active')?.getAttribute('data-category') || 'all');
+}
+
+function deleteFromCart(productId) {
+    cart = cart.filter(item => item.id !== productId);
+    updateCartUI();
+    renderMenu(document.querySelector('.category-btn.active')?.getAttribute('data-category') || 'all');
+}
+
+function updateCartUI() {
+    const cartItems = document.getElementById('cartItems');
+    const cartTotal = document.getElementById('cartTotal');
+    const cartCountTop = document.getElementById('cartCountTop');
+    const orderBtn = document.getElementById('orderBtn');
+    
+    const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+    cartCountTop.textContent = totalItems;
+    
+    if (cart.length === 0) {
+        cartItems.innerHTML = `
+            <div class="cart-empty">
+                <i class="fas fa-shopping-bag"></i>
+                <p>Sepetiniz boş</p>
+                <p style="font-size:0.7rem; color:#444;">Hemen bir şeyler ekleyin!</p>
+            </div>
+        `;
+        cartTotal.textContent = '₺0.00';
+        orderBtn.disabled = true;
+        return;
+    }
+    
+    let html = '';
+    let total = 0;
+    cart.forEach(item => {
+        const itemTotal = item.price * item.quantity;
+        total += itemTotal;
+        html += `
+            <div class="cart-item">
+                <div class="ci-icon">${item.icon || '🍽️'}</div>
+                <div class="ci-info">
+                    <div class="ci-name">${item.name}</div>
+                    <div class="ci-price">₺${itemTotal.toFixed(2)}</div>
+                    <div class="ci-qty-controls">
+                        <button onclick="removeFromCart(${item.id})"><i class="fas fa-minus"></i></button>
+                        <span class="ci-qty-num">${item.quantity}</span>
+                        <button onclick="addToCart(${item.id})"><i class="fas fa-plus"></i></button>
+                    </div>
+                </div>
+                <button class="ci-remove" onclick="deleteFromCart(${item.id})">
+                    <i class="fas fa-trash"></i>
+                </button>
+            </div>
+        `;
+    });
+    
+    cartItems.innerHTML = html;
+    cartTotal.textContent = `₺${total.toFixed(2)}`;
+    orderBtn.disabled = false;
+}
+
+// ================================================================
+// 📦  SİPARİŞ VER
+// ================================================================
+function placeOrder() {
+    if (cart.length === 0) {
+        showToast('⚠️ Sepetiniz boş!');
+        return;
+    }
+    
+    if (!userName) {
+        document.getElementById('nameOverlay').classList.remove('hidden');
+        document.getElementById('nameOverlay').style.opacity = '1';
+        showToast('⚠️ Lütfen önce adınızı girin!');
+        return;
+    }
+    
+    const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+    
+    let orderSummary = '';
+    cart.forEach(item => {
+        orderSummary += `${item.icon} ${item.name} ×${item.quantity} = ₺${(item.price * item.quantity).toFixed(2)}\n`;
+    });
+    
+    // Sepeti temizle
+    cart = [];
+    updateCartUI();
+    closeCart();
+    renderMenu(document.querySelector('.category-btn.active')?.getAttribute('data-category') || 'all');
+    
+    // Konsola sipariş detayını yaz (sen görebilirsin)
+    console.log(`🆕 YENİ SİPARİŞ!`);
+    console.log(`👤 Müşteri: ${userName}`);
+    console.log(`📦 Ürünler:\n${orderSummary}`);
+    console.log(`💰 Toplam: ₺${total.toFixed(2)}`);
+    console.log(`━━━━━━━━━━━━━━━━━━━━━━━━━`);
+    
+    showToast(`✅ Siparişiniz alındı! ${userName}, teşekkürler!`);
+}
+
+// ================================================================
+// 🛒  SEPET AÇ/KAPA
+// ================================================================
+function openCart() {
+    if (!userName) {
+        document.getElementById('nameOverlay').classList.remove('hidden');
+        document.getElementById('nameOverlay').style.opacity = '1';
+        showToast('⚠️ Lütfen önce adınızı girin!');
+        return;
+    }
+    document.getElementById('cartOverlay').classList.add('active');
+    document.body.style.overflow = 'hidden';
+    updateCartUI();
+}
+
+function closeCart() {
+    document.getElementById('cartOverlay').classList.remove('active');
+    document.body.style.overflow = '';
+}
+
+// ================================================================
+// 💬  TOAST
+// ================================================================
+let toastTimeout;
+
+function showToast(message) {
+    const toast = document.getElementById('toast');
+    toast.textContent = message;
+    toast.classList.add('show');
+    clearTimeout(toastTimeout);
+    toastTimeout = setTimeout(() => {
+        toast.classList.remove('show');
+    }, 3000);
+}
+
+// ================================================================
+// 📱  QR KOD
+// ================================================================
+function generateQR() {
+    const container = document.getElementById('qrcode');
+    container.innerHTML = '';
+    new QRCode(container, {
+        text: window.location.href,
+        width: 160,
+        height: 160,
+        colorDark: '#0a0a0a',
+        colorLight: '#ffffff',
+        correctLevel: QRCode.CorrectLevel.H
+    });
+}
+
+window.addEventListener('load', generateQR);
+
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+        closeCart();
+    }
+});
+
+// ================================================================
+// 🚀  KATEGORİLER
+// ================================================================
+const categoryBtns = document.querySelectorAll('.category-btn');
+
+categoryBtns.forEach(btn => {
+    btn.addEventListener('click', function() {
+        categoryBtns.forEach(b => b.classList.remove('active'));
+        this.classList.add('active');
+        renderMenu(this.getAttribute('data-category'));
+    });
+});
+</script>
 </body>
 </html>
